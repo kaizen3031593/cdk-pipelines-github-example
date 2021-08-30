@@ -19,7 +19,7 @@ const pipeline = new GitHubWorkflow(app, 'Pipeline', {
 // a wave deploys all stages concurrently
 const prod = pipeline.addWave('Prod');
 
-const ACCOUNT = '585695036304';
+const ACCOUNT = '489318732371';
 prod.addStage(new MyStage(app, 'US', { env: { account: ACCOUNT, region: 'us-east-1' } }));
 prod.addStage(new MyStage(app, 'EU', { env: { account: ACCOUNT, region: 'eu-west-2' } }));
 
