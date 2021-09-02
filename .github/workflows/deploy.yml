@@ -12,23 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: []
     env: {}
-    container: null
+    container:
+      image: alpine
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: v14.17.0
+          node-version: "14"
       - name: Build
-        run: |-
-          yarn
-          yarn build
-          git diff --exit-code
-      - name: Upload cdk.out
-        uses: actions/upload-artifact@v2.1.1
-        with:
-          name: cdk.out
-          path: cdk.out
+        run: echo "nothing to do (cdk.out is committed)"
+      - run: echo post-build
   Assets-FileAsset1:
     name: Publish Assets Assets-FileAsset1
     needs:
@@ -37,11 +31,8 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-      - name: Download cdk.out
-        uses: actions/download-artifact@v2
-        with:
-          name: cdk.out
-          path: cdk.out
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install
         run: npm install --no-save cdk-assets
       - uses: aws-actions/configure-aws-credentials@v1
@@ -51,12 +42,12 @@ jobs:
           aws-region: us-west-2
           role-skip-session-tagging: true
           role-duration-seconds: 1800
-      - name: Publish 0e32d3f91503a0c0c16807c03abe9868ee9947c47a30b9b5130993f45f77831e
+      - name: Publish 80bae959798207a8e1ec78079cc2269e67c0b146e3baeef23cb529240286096c
           (template)
         run: npx cdk-assets --path
-          "cdk.out/assembly-US/USBucketStack1256B33F.assets.json" --verbose
-          publish
-          "0e32d3f91503a0c0c16807c03abe9868ee9947c47a30b9b5130993f45f77831e:585695036304-us-east-1"
+          "cdk.out/assembly-StageA/StageABucketStackEAC67DBE.assets.json"
+          --verbose publish
+          "80bae959798207a8e1ec78079cc2269e67c0b146e3baeef23cb529240286096c:489318732371-us-east-1"
   Assets-FileAsset2:
     name: Publish Assets Assets-FileAsset2
     needs:
@@ -65,11 +56,8 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-      - name: Download cdk.out
-        uses: actions/download-artifact@v2
-        with:
-          name: cdk.out
-          path: cdk.out
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install
         run: npm install --no-save cdk-assets
       - uses: aws-actions/configure-aws-credentials@v1
@@ -79,18 +67,18 @@ jobs:
           aws-region: us-west-2
           role-skip-session-tagging: true
           role-duration-seconds: 1800
-      - name: "Publish 00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494
+      - name: "Publish 4cd61014b71160e8c66fe167e43710d5ba068b80b134e9bd84508cf9238b2392
           "
         run: npx cdk-assets --path
-          "cdk.out/assembly-US/USBucketStack1256B33F.assets.json" --verbose
-          publish
-          "00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494:585695036304-us-east-1"
-      - name: "Publish 00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494
+          "cdk.out/assembly-StageA/StageABucketStackEAC67DBE.assets.json"
+          --verbose publish
+          "4cd61014b71160e8c66fe167e43710d5ba068b80b134e9bd84508cf9238b2392:489318732371-us-east-1"
+      - name: "Publish 4cd61014b71160e8c66fe167e43710d5ba068b80b134e9bd84508cf9238b2392
           "
         run: npx cdk-assets --path
-          "cdk.out/assembly-EU/EUBucketStack0F6FDF2E.assets.json" --verbose
-          publish
-          "00f2465b209575c44977ca8ff1c81d86d002849272ede5a8a90ac87dfff1e494:585695036304-eu-west-2"
+          "cdk.out/assembly-StageB/StageBBucketStackDF3FFF07.assets.json"
+          --verbose publish
+          "4cd61014b71160e8c66fe167e43710d5ba068b80b134e9bd84508cf9238b2392:489318732371-eu-west-2"
   Assets-FileAsset3:
     name: Publish Assets Assets-FileAsset3
     needs:
@@ -99,11 +87,8 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-      - name: Download cdk.out
-        uses: actions/download-artifact@v2
-        with:
-          name: cdk.out
-          path: cdk.out
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install
         run: npm install --no-save cdk-assets
       - uses: aws-actions/configure-aws-credentials@v1
@@ -113,12 +98,12 @@ jobs:
           aws-region: us-west-2
           role-skip-session-tagging: true
           role-duration-seconds: 1800
-      - name: Publish 2fb920ac036e4f90e42d8280409f51fc41ba75d1b77b8c1faa0d9fc65ef3ca68
+      - name: Publish 69e952bbbc3cb7e339a352abadec11441d80226c84beb45efb9eeb9fceb5c342
           (template)
         run: npx cdk-assets --path
-          "cdk.out/assembly-US/USFunctionStackFE5EB3B1.assets.json" --verbose
-          publish
-          "2fb920ac036e4f90e42d8280409f51fc41ba75d1b77b8c1faa0d9fc65ef3ca68:585695036304-us-east-1"
+          "cdk.out/assembly-StageA/StageAFunctionStackD42C27B8.assets.json"
+          --verbose publish
+          "69e952bbbc3cb7e339a352abadec11441d80226c84beb45efb9eeb9fceb5c342:489318732371-us-east-1"
   Assets-FileAsset4:
     name: Publish Assets Assets-FileAsset4
     needs:
@@ -127,11 +112,8 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-      - name: Download cdk.out
-        uses: actions/download-artifact@v2
-        with:
-          name: cdk.out
-          path: cdk.out
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install
         run: npm install --no-save cdk-assets
       - uses: aws-actions/configure-aws-credentials@v1
@@ -141,18 +123,18 @@ jobs:
           aws-region: us-west-2
           role-skip-session-tagging: true
           role-duration-seconds: 1800
-      - name: "Publish 9f0287d50a07bf32d20457428155487d1dcece75d64fe6e470a459e0a68496dc
+      - name: "Publish 110e18dfbcf5cf9d2a3778bf70a12ceccf9eb10d7dd493ef917073e32450a46c
           "
         run: npx cdk-assets --path
-          "cdk.out/assembly-US/USFunctionStackFE5EB3B1.assets.json" --verbose
-          publish
-          "9f0287d50a07bf32d20457428155487d1dcece75d64fe6e470a459e0a68496dc:585695036304-us-east-1"
-      - name: "Publish 9f0287d50a07bf32d20457428155487d1dcece75d64fe6e470a459e0a68496dc
+          "cdk.out/assembly-StageA/StageAFunctionStackD42C27B8.assets.json"
+          --verbose publish
+          "110e18dfbcf5cf9d2a3778bf70a12ceccf9eb10d7dd493ef917073e32450a46c:489318732371-us-east-1"
+      - name: "Publish 110e18dfbcf5cf9d2a3778bf70a12ceccf9eb10d7dd493ef917073e32450a46c
           "
         run: npx cdk-assets --path
-          "cdk.out/assembly-EU/EUFunctionStackAAE89C93.assets.json" --verbose
-          publish
-          "9f0287d50a07bf32d20457428155487d1dcece75d64fe6e470a459e0a68496dc:585695036304-eu-west-2"
+          "cdk.out/assembly-StageB/StageBFunctionStack18098DCD.assets.json"
+          --verbose publish
+          "110e18dfbcf5cf9d2a3778bf70a12ceccf9eb10d7dd493ef917073e32450a46c:489318732371-eu-west-2"
   Assets-FileAsset5:
     name: Publish Assets Assets-FileAsset5
     needs:
@@ -161,11 +143,8 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-      - name: Download cdk.out
-        uses: actions/download-artifact@v2
-        with:
-          name: cdk.out
-          path: cdk.out
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install
         run: npm install --no-save cdk-assets
       - uses: aws-actions/configure-aws-credentials@v1
@@ -175,12 +154,12 @@ jobs:
           aws-region: us-west-2
           role-skip-session-tagging: true
           role-duration-seconds: 1800
-      - name: Publish 501ab098166f7a7ef104f87651bccd9195fed570eae80a1c5b5cdbf4e830fc58
+      - name: Publish 84565ea89b92f31827b329ed240c1c63c9fc8640d965c32071d3409d960499b6
           (template)
         run: npx cdk-assets --path
-          "cdk.out/assembly-EU/EUBucketStack0F6FDF2E.assets.json" --verbose
-          publish
-          "501ab098166f7a7ef104f87651bccd9195fed570eae80a1c5b5cdbf4e830fc58:585695036304-eu-west-2"
+          "cdk.out/assembly-StageB/StageBBucketStackDF3FFF07.assets.json"
+          --verbose publish
+          "84565ea89b92f31827b329ed240c1c63c9fc8640d965c32071d3409d960499b6:489318732371-eu-west-2"
   Assets-FileAsset6:
     name: Publish Assets Assets-FileAsset6
     needs:
@@ -189,11 +168,8 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-      - name: Download cdk.out
-        uses: actions/download-artifact@v2
-        with:
-          name: cdk.out
-          path: cdk.out
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install
         run: npm install --no-save cdk-assets
       - uses: aws-actions/configure-aws-credentials@v1
@@ -203,14 +179,14 @@ jobs:
           aws-region: us-west-2
           role-skip-session-tagging: true
           role-duration-seconds: 1800
-      - name: Publish 70559642dcbe8e2773e79f7ef7f3ba28a235e290bee5c6af97479b0fe6de1298
+      - name: Publish 00b223fe63f67e00ff309d53321bc93056d45c1b743686866a6b9f888378b769
           (template)
         run: npx cdk-assets --path
-          "cdk.out/assembly-EU/EUFunctionStackAAE89C93.assets.json" --verbose
-          publish
-          "70559642dcbe8e2773e79f7ef7f3ba28a235e290bee5c6af97479b0fe6de1298:585695036304-eu-west-2"
-  Prod-US-BucketStack-Deploy:
-    name: Deploy USBucketStack1256B33F
+          "cdk.out/assembly-StageB/StageBFunctionStack18098DCD.assets.json"
+          --verbose publish
+          "00b223fe63f67e00ff309d53321bc93056d45c1b743686866a6b9f888378b769:489318732371-eu-west-2"
+  StageA-BucketStack-Deploy:
+    name: Deploy StageABucketStackEAC67DBE
     permissions:
       contents: none
     needs:
@@ -227,49 +203,23 @@ jobs:
           aws-region: us-east-1
           role-skip-session-tagging: true
           role-duration-seconds: 1800
-          role-to-assume: arn:aws:iam::585695036304:role/cdk-hnb659fds-deploy-role-585695036304-us-east-1
+          role-to-assume: arn:aws:iam::489318732371:role/cdk-hnb659fds-deploy-role-489318732371-us-east-1
           role-external-id: Pipeline
       - uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: US-BucketStack
-          template: https://cdk-hnb659fds-assets-585695036304-us-east-1.s3.us-east-1.amazonaws.com/0e32d3f91503a0c0c16807c03abe9868ee9947c47a30b9b5130993f45f77831e.json
+          name: StageA-BucketStack
+          template: https://cdk-hnb659fds-assets-489318732371-us-east-1.s3.us-east-1.amazonaws.com/80bae959798207a8e1ec78079cc2269e67c0b146e3baeef23cb529240286096c.json
           no-fail-on-empty-changeset: "1"
-          role-arn: arn:aws:iam::585695036304:role/cdk-hnb659fds-cfn-exec-role-585695036304-us-east-1
-  Prod-EU-BucketStack-Deploy:
-    name: Deploy EUBucketStack0F6FDF2E
-    permissions:
-      contents: none
-    needs:
-      - Build-Build
-      - Assets-FileAsset5
-      - Assets-FileAsset2
-      - Build-Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-          role-skip-session-tagging: true
-          role-duration-seconds: 1800
-          role-to-assume: arn:aws:iam::585695036304:role/cdk-hnb659fds-deploy-role-585695036304-eu-west-2
-          role-external-id: Pipeline
-      - uses: aws-actions/aws-cloudformation-github-deploy@v1
-        with:
-          name: EU-BucketStack
-          template: https://cdk-hnb659fds-assets-585695036304-eu-west-2.s3.eu-west-2.amazonaws.com/501ab098166f7a7ef104f87651bccd9195fed570eae80a1c5b5cdbf4e830fc58.json
-          no-fail-on-empty-changeset: "1"
-          role-arn: arn:aws:iam::585695036304:role/cdk-hnb659fds-cfn-exec-role-585695036304-eu-west-2
-  Prod-US-FunctionStack-Deploy:
-    name: Deploy USFunctionStackFE5EB3B1
+          role-arn: arn:aws:iam::489318732371:role/cdk-hnb659fds-cfn-exec-role-489318732371-us-east-1
+  StageA-FunctionStack-Deploy:
+    name: Deploy StageAFunctionStackD42C27B8
     permissions:
       contents: none
     needs:
       - Build-Build
       - Assets-FileAsset3
       - Assets-FileAsset4
-      - Prod-US-BucketStack-Deploy
+      - StageA-BucketStack-Deploy
       - Build-Build
     runs-on: ubuntu-latest
     steps:
@@ -280,24 +230,25 @@ jobs:
           aws-region: us-east-1
           role-skip-session-tagging: true
           role-duration-seconds: 1800
-          role-to-assume: arn:aws:iam::585695036304:role/cdk-hnb659fds-deploy-role-585695036304-us-east-1
+          role-to-assume: arn:aws:iam::489318732371:role/cdk-hnb659fds-deploy-role-489318732371-us-east-1
           role-external-id: Pipeline
       - uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: US-FunctionStack
-          template: https://cdk-hnb659fds-assets-585695036304-us-east-1.s3.us-east-1.amazonaws.com/2fb920ac036e4f90e42d8280409f51fc41ba75d1b77b8c1faa0d9fc65ef3ca68.json
+          name: StageA-FunctionStack
+          template: https://cdk-hnb659fds-assets-489318732371-us-east-1.s3.us-east-1.amazonaws.com/69e952bbbc3cb7e339a352abadec11441d80226c84beb45efb9eeb9fceb5c342.json
           no-fail-on-empty-changeset: "1"
-          role-arn: arn:aws:iam::585695036304:role/cdk-hnb659fds-cfn-exec-role-585695036304-us-east-1
-  Prod-EU-FunctionStack-Deploy:
-    name: Deploy EUFunctionStackAAE89C93
+          role-arn: arn:aws:iam::489318732371:role/cdk-hnb659fds-cfn-exec-role-489318732371-us-east-1
+  StageB-BucketStack-Deploy:
+    name: Deploy StageBBucketStackDF3FFF07
     permissions:
       contents: none
     needs:
       - Build-Build
-      - Assets-FileAsset6
-      - Assets-FileAsset4
-      - Prod-EU-BucketStack-Deploy
+      - Assets-FileAsset5
+      - Assets-FileAsset2
       - Build-Build
+      - StageA-BucketStack-Deploy
+      - StageA-FunctionStack-Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
@@ -307,12 +258,40 @@ jobs:
           aws-region: eu-west-2
           role-skip-session-tagging: true
           role-duration-seconds: 1800
-          role-to-assume: arn:aws:iam::585695036304:role/cdk-hnb659fds-deploy-role-585695036304-eu-west-2
+          role-to-assume: arn:aws:iam::489318732371:role/cdk-hnb659fds-deploy-role-489318732371-eu-west-2
           role-external-id: Pipeline
       - uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: EU-FunctionStack
-          template: https://cdk-hnb659fds-assets-585695036304-eu-west-2.s3.eu-west-2.amazonaws.com/70559642dcbe8e2773e79f7ef7f3ba28a235e290bee5c6af97479b0fe6de1298.json
+          name: StageB-BucketStack
+          template: https://cdk-hnb659fds-assets-489318732371-eu-west-2.s3.eu-west-2.amazonaws.com/84565ea89b92f31827b329ed240c1c63c9fc8640d965c32071d3409d960499b6.json
           no-fail-on-empty-changeset: "1"
-          role-arn: arn:aws:iam::585695036304:role/cdk-hnb659fds-cfn-exec-role-585695036304-eu-west-2
-
+          role-arn: arn:aws:iam::489318732371:role/cdk-hnb659fds-cfn-exec-role-489318732371-eu-west-2
+  StageB-FunctionStack-Deploy:
+    name: Deploy StageBFunctionStack18098DCD
+    permissions:
+      contents: none
+    needs:
+      - Build-Build
+      - Assets-FileAsset6
+      - Assets-FileAsset4
+      - StageB-BucketStack-Deploy
+      - Build-Build
+      - StageA-BucketStack-Deploy
+      - StageA-FunctionStack-Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-skip-session-tagging: true
+          role-duration-seconds: 1800
+          role-to-assume: arn:aws:iam::489318732371:role/cdk-hnb659fds-deploy-role-489318732371-eu-west-2
+          role-external-id: Pipeline
+      - uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: StageB-FunctionStack
+          template: https://cdk-hnb659fds-assets-489318732371-eu-west-2.s3.eu-west-2.amazonaws.com/00b223fe63f67e00ff309d53321bc93056d45c1b743686866a6b9f888378b769.json
+          no-fail-on-empty-changeset: "1"
+          role-arn: arn:aws:iam::489318732371:role/cdk-hnb659fds-cfn-exec-role-489318732371-eu-west-2
